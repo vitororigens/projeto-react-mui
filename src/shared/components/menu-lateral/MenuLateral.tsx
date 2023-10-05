@@ -1,6 +1,36 @@
-import { Avatar, Box, Divider, Drawer, List, ListItemButton, ListItemIcon, ListItemText, useMediaQuery, useTheme } from "@mui/material"
-import HomeIcon from '@mui/icons-material/Home';
+import { Avatar, Box, Divider, Drawer, Icon, List, ListItemButton, ListItemIcon, ListItemText, useMediaQuery, useTheme } from "@mui/material"
 import { useDrawerContext } from "../../contexts";
+import { useMatch, useNavigate, useResolvedPath } from "react-router-dom";
+
+interface IListItemLinkProps{
+    to: string;
+    icon: string;
+    label: string;
+    onClick: (() => void) | undefined;
+}
+
+const ListItemLink: React.FC<IListItemLinkProps> = ({to, icon, label, onClick}) => {
+    
+    const navigate = useNavigate();
+
+    const resolvedPath = useResolvedPath(to);
+    const mach = useMatch({path: resolvedPath.pathname, end: false})
+    
+    const handleClick = () => {
+        navigate(to);
+        onClick?.();
+    }
+    
+    return(
+        <ListItemButton selected={!!mach} onClick={handleClick}>
+            <ListItemIcon>
+                <Icon>{icon}</Icon>
+             </ListItemIcon>
+            <ListItemText primary={label} />    
+        </ListItemButton>
+
+    )
+}
 
 interface IMenuLateral {
     children: React.ReactNode
@@ -25,12 +55,13 @@ export const MenuLateral: React.FC<IMenuLateral> = ({ children }) => {
                     <Divider />
                     <Box flex={1}>
                     <List component="nav">
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <HomeIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Home" />    
-                        </ListItemButton>
+                        <ListItemLink
+                        icon="home"
+                        to="/pagina-inicial"
+                        label="Página Inicial"
+                        onClick={smDown ? toggleDrawerOpen : undefined}  
+                        />
+                        
                     </List>
                     </Box>
                 </Box>

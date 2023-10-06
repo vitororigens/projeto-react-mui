@@ -33,13 +33,46 @@ const ListItemLink: React.FC<IListItemLinkProps> = ({ to, icon, label, onClick})
     )
 }
 
+interface IListItemLinkProps {
+  to: string;
+  icon: string;
+  label: string;
+  onClick: (() => void) | undefined;
+}
+
+const ListItemLink: React.FC<IListItemLinkProps> = ({
+  to,
+  icon,
+  label,
+  onClick,
+}) => {
+  const navigate = useNavigate();
+
+  const resolvedPath = useResolvedPath(to);
+  const mach = useMatch({ path: resolvedPath.pathname, end: false });
+
+  const handleClick = () => {
+    navigate(to);
+    onClick?.();
+  };
+
+  return (
+    <ListItemButton selected={!!mach} onClick={handleClick}>
+      <ListItemIcon>
+        <Icon>{icon}</Icon>
+      </ListItemIcon>
+      <ListItemText primary={label} />
+    </ListItemButton>
+  );
+};
+
 interface IMenuLateral {
-    children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export const MenuLateral: React.FC<IMenuLateral> = ({ children }) => {
-    const theme = useTheme();
-    const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const theme = useTheme();
+  const smDown = useMediaQuery(theme.breakpoints.down("sm"));
 
     const{ isDrawerOpen, toggleDrawerOpen, drawerOptions } = useDrawerContext();
     

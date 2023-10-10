@@ -1,12 +1,14 @@
 import { Icon, IconButton, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
 import { useDrawerContext } from "../contexts";
+import { ReactNode } from "react";
 
 interface ILayoutBaseDePaginas{
     titulo: string;
+    barraDeFerramentas: ReactNode;
     children: string;
 }
-export const LayoutBaseDePaginas: React.FC<ILayoutBaseDePaginas> = ({ children , titulo }) => {
+export const LayoutBaseDePaginas: React.FC<ILayoutBaseDePaginas> = ({ children , titulo, barraDeFerramentas }) => {
 
    const theme = useTheme();
    
@@ -29,7 +31,7 @@ export const LayoutBaseDePaginas: React.FC<ILayoutBaseDePaginas> = ({ children ,
                 
            </Box>
            <Box>
-                Barra de ferramentas
+                {barraDeFerramentas}
            </Box>
 
 

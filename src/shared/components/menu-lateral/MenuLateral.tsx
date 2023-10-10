@@ -94,12 +94,6 @@ export const MenuLateral: React.FC<IMenuLateral> = ({ children }) => {
                 label="Página Inicial"
                 onClick={smDown ? toggleDrawerOpen : undefined}
               />
-              <ListItemLink
-                icon="star"
-                to="/pagina-inicial-2"
-                label="Página Inicial 2"
-                onClick={smDown ? toggleDrawerOpen : undefined}
-              />
             </List>
           </Box>
         </Box>
